@@ -1,0 +1,32 @@
+{
+  "name": "webshell-back",
+  "version": "1.0.0",
+  "description": "Backend for webshell",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BaptisteContreras/webshell-back.git"
+  },
+  "keywords": [
+    "js",
+    "infosec",
+    "webshell"
+  ],
+  "author": "Baptiste CONTRERAS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BaptisteContreras/webshell-back/issues"
+  },
+  "homepage": "https://github.com/BaptisteContreras/webshell-back#readme",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-generator": "^4.16.1",
+    "socket.io": "^2.3.0"
+  }
+}
