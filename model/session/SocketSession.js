@@ -25,6 +25,14 @@ class SocketSession {
   get id() {
     return this._id;
   }
+
+  sendCommand(command) {
+    this._ncSession.sendToNc(command);
+  }
+
+  disconnect() {
+    this._ncSession.disconnect();
+  }
 }
 
 module.exports = SocketSession;
