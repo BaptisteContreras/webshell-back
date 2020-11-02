@@ -26,7 +26,7 @@ io.on('connection', (socket) => {
           console.log(session);
         }
         if (session) {
-          socket.emit(Events.START_SESSION_SUCCESS, session.id);
+          socket.emit(Events.START_SESSION_SUCCESS, {sessionId: session.id, port : data.port});
         }
 
       } else {
