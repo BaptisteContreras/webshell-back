@@ -18,16 +18,16 @@ class SessionManager {
 
       return null;
     }
-
-    let session = new SocketSession(this._generateUniqueSessionId(socket), socket, this._ncFactory.createAndOpenNcSession(port), port);
-    this._pool[socket.id] = session;
+    let sid =this._generateUniqueSessionId(socket)
+    let session = new SocketSession(sid, socket, this._ncFactory.createAndOpenNcSession(port, sid), port);
+    this._pool[sid] = session;
 
     return session;
   }
 
   getSocketSession(id, socket, bypassSocketOwnerCheck = false) {
     let session = this._pool[id];
-
+    console.log(this._pool)
     if (!session) {
       this._io.emit(Events.SESSION_NOT_FOUND, id);
 

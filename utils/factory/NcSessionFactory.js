@@ -12,7 +12,7 @@ class NcSessionFactory {
     this._debug = debug;
   }
 
-  createAndOpenNcSession(port) {
+  createAndOpenNcSession(port, sessionId) {
     let process = spawn(this._command, [this._args, port]);
 
     process.on('error', (e) => {
@@ -20,28 +20,40 @@ class NcSessionFactory {
         console.log(e);
       }
 
-      this._io.emit(Events.NC_SESSION_TECHNICAL_ERROR, "NC technical error.");
+      this._io.emit(Events.NC_SESSION_TECHNICAL_ERROR, {
+        sessionId,
+        message : "NC technical error."
+      });
     });
 
     process.stdout.on("data", data => {
       if (this._debug) {
         console.log(`stdout: ${data}`);
       }
-      this._io.emit(Events.NC_SESSION_STDOUT, data.toString());
+      this._io.emit(Events.NC_SESSION_STDOUT, {
+        sessionId,
+        message: data.toString()
+      });
     });
 
     process.stderr.on('data', (data) => {
       if (this._debug) {
         console.error(`stderr: ${data}`);
       }
-      this._io.emit(Events.NC_SESSION_STDERR, data.toString());
+      this._io.emit(Events.NC_SESSION_STDERR, {
+        sessionId,
+        message: data.toString()
+      });
     });
 
     process.on('close', (code) => {
       if (this._debug) {
         console.log(`child process exited with code ${code}`);
       }
-      this._io.emit(Events.NC_SESSION_CLOSE, code);
+      this._io.emit(Events.NC_SESSION_CLOSE, {
+        sessionId,
+        code
+      });
     });
 
     return new NcSession(process);
