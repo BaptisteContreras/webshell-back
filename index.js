@@ -95,6 +95,11 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('disconnect', (data) => {
+    console.log("DECO")
+    sessionManager.deleteAllSession(socket)
+  })
+
 
 });
 

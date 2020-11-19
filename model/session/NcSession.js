@@ -1,9 +1,10 @@
+const kill  = require('tree-kill');
+
 class NcSession {
 
 
   constructor(process) {
     this._process = process;
-    this.sendToNc("dir\n");
   }
 
   sendToNc(data) {
@@ -11,7 +12,7 @@ class NcSession {
   }
 
   disconnect() {
-    this._process.disconnect();
+    kill(this._process.pid, 'SIGKILL')
   }
 }
 

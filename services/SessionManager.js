@@ -27,7 +27,7 @@ class SessionManager {
 
   getSocketSession(id, socket, bypassSocketOwnerCheck = false) {
     let session = this._pool[id];
-    console.log(this._pool)
+    console.log(this._pool.id)
     if (!session) {
       this._io.emit(Events.SESSION_NOT_FOUND, id);
 
@@ -44,7 +44,7 @@ class SessionManager {
   }
 
   isPortAlreadyInUse(port) {
-    return Object.entries(this._pool).filter((el) => el.port === port).length >= 1;
+    return Object.values(this._pool).filter((el) => el.port === port).length >= 1;
   }
 
 
@@ -54,16 +54,23 @@ class SessionManager {
 
   deleteSession(id, socket) {
     let session = this.getSocketSession(id, socket, true);
-
+    console.log("delete " + id)
     if (session) {
       session.disconnect();
-      this._pool = Object.entries(this._pool).filter((i, el) => el.id !== id);
-
+      this._pool = Object.values(this._pool).filter(el => el.id !== id);
+      console.log(this._pool.entries.length)
+      console.log(Object.entries(this._pool).filter((i, el) => el.id !== id))
       return true;
     }
 
     return false;
 
+  }
+
+  deleteAllSession(socket){
+    let toDelete = Object.values(this._pool).filter(el => el.socket.id === socket.id);
+
+    toDelete.map(current => this.deleteSession(current.id, socket))
   }
 
 
