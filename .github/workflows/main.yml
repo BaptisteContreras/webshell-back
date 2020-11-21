@@ -26,5 +26,5 @@ jobs:
         run: |
           sshpass -p ${{ secrets.SSHPASS }} ssh -oStrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} "cd socket && git pull origin master"
           sshpass -p ${{ secrets.SSHPASS }} ssh -oStrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} "cd socket && npm install"
-          sshpass -p ${{ secrets.SSHPASS }} ssh -oStrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} "pkill -f 'SCREEN -S api-socket'"
-          sshpass -p ${{ secrets.SSHPASS }} ssh -oStrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} "screen -S api-socket -d -m  ~/runSocket.sh"
+          sshpass -p ${{ secrets.SSHPASS }} ssh -oStrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} "pm2 stop socket-api"
+          sshpass -p ${{ secrets.SSHPASS }} ssh -oStrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} "pm2 start ~/runSocket.sh --name='socket-api'"
