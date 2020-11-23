@@ -1,4 +1,5 @@
 const kill  = require('tree-kill');
+const os = require('os');
 
 class NcSession {
 
@@ -8,7 +9,7 @@ class NcSession {
   }
 
   sendToNc(data) {
-    this._process.stdin.write(data);
+    this._process.stdin.write(data+os.EOL);
   }
 
   disconnect() {
